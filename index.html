@@ -449,16 +449,26 @@
                 <div class="social-feeds">
                     <div class="social-feed">
                         <h2>Xによる活動報告</h2>
-                        <div class="feed-placeholder">
+                        <div class="feed-placeholder" id="twitterPlaceholder">
                             <!-- Xの埋め込みフィード：Xのウィジェットコードを取得→https://publish.twitter.com/ -->
                             <a class="twitter-timeline" 
-                              data-tweet-limit="1" 
+                              data-tweet-limit="2" 
                               data-width="300"
                               data-height="500"
                               href="https://twitter.com/elonmusk?ref_src=twsrc%5Etfw">
-                              <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-                           </a>
+                            </a>
                         </div>
+                        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                        <script>
+                          // ページの読み込み完了後にTwitterウィジェットを読み込む
+                          window.addEventListener('load', function() {
+                          var script = document.createElement('script');
+                          script.src = "https://platform.twitter.com/widgets.js";
+                          script.async = true;
+                          script.charset = "utf-8";
+                          document.body.appendChild(script);
+                          });
+                       </script>
                     </div>
                     
                     <!-- Instagramの埋め込みを行う場合（現状は<noscript>にしている） -->
