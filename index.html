@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>東京聖栄大学 - 地域連携プロジェクト</title>
+    <style>
+        :root {
+            --primary-color: #1a5276;
+            --secondary-color: #3498db;
+            --accent-color: #2ecc71;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --link-color: #2980b9;
+            --link-hover-color: #3498db;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans JP', 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f9f9f9;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* ヘッダー */
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+        }
+        
+        .nav-toggle {
+            display: none;
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style-type: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        nav ul li a:hover {
+            color: var(--light-color);
+        }
+        
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: white;
+            transition: width 0.3s ease;
+        }
+        
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+        
+        /* メインコンテンツ */
+        main {
+            padding: 2rem 0;
+        }
+        
+        .hero {
+            text-align: center;
+            margin-bottom: 3rem;
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.1rem;
+            max-width: none;
+            margin: 0 auto 2rem;
+            color: #555;
+        }
+        
+        .hero-image {
+            width: 100%;
+            max-width: 800px;
+            height: auto;
+            border-radius: 8px;
+            margin: 0 auto;
+            display: block;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .hero-image:hover {
+            transform: scale(1.02);
+        }
+        
+        .social-feeds {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            justify-content: center;
+        }
+        
+        .social-feed {
+            flex: none;
+            width: 100%;
+            background-color: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin: 0 auto; /* 中央揃え */
+        }
+        
+        .social-feed h2 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 0.5rem;
+        }
+        
+        .feed-placeholder {
+            background-color: #f8f9fa;
+            border: 1px dashed #ccc;
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .feed-placeholder i {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--secondary-color);
+        }
+        
+        .projects {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .project-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .project-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .project-content {
+            padding: 1.5rem;
+        }
+        
+        .project-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        .project-content p {
+            color: #555;
+            margin-bottom: 1rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+        
+        .btn:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background-color: var(--secondary-color);
+        }
+        
+        /* フッター */
+        footer {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-section h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--light-color);
+        }
+        
+        .footer-section p {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-section ul {
+            list-style-type: none;
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-section ul li a {
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-section ul li a:hover {
+            color: var(--light-color);
+            padding-left: 5px;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--primary-color);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        /* レスポンシブデザイン */
+        @media (max-width: 768px) {
+            .nav-toggle {
+                display: block;
+            }
+            
+            nav {
+                position: fixed;
+                top: 60px;
+                left: -100%;
+                width: 80%;
+                height: calc(100vh - 60px);
+                background-color: var(--primary-color);
+                transition: all 0.3s ease;
+                box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+            }
+            
+            nav.show {
+                left: 0;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                padding: 1rem;
+            }
+            
+            nav ul li {
+                margin: 0;
+                padding: 1rem 0;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            
+            .header-content {
+                padding: 0 1rem;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .social-feeds {
+                flex-direction: column;
+            }
+            
+            .social-feed {
+                min-width: 100%;
+            }
+            
+            .projects {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">東京聖栄大学</a>
+                <button class="nav-toggle" id="navToggle">
+                    ☰
+                </button>
+                <nav id="mainNav">
+                    <ul>
+                        <li><a href="index.html">ホーム</a></li>
+                        <li><a href="#">大学紹介</a></li>
+                        <li><a href="#">学部・学科</a></li>
+                        <li><a href="#">入試情報</a></li>
+                        <li><a href="#">キャンパスライフ</a></li>
+                        <li><a href="#">研究・社会貢献</a></li>
+                        <li><a href="#">お問い合わせ</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <section class="hero">
+                <h1>地域連携プロジェクト</h1>
+                <p>管理栄養学科、食品学科の学生が交流しながら、自分の興味関心に合わせて、リアルな体験を積むことができます。<br>スポーツ関連イベントの企画や運営、栄養的配慮がされた商品の開発、子どもの食体験支援・食育、社員食堂のメニュー開発等多岐にわたります。１年次後期から活動スタートです。</p>
+            </section>
+
+            <section>
+                <h2 class="section-title">活動内容</h2>
+                <div class="social-feeds">
+                    <div class="social-feed">
+                        <h2>Xによる活動報告</h2>
+                        <div class="feed-placeholder">
+                            <!-- Xの埋め込みフィード：Xのウィジェットコードを取得→https://publish.twitter.com/ -->
+                            <a class="twitter-timeline" 
+                              data-tweet-limit="2" 
+                              data-width="400"
+                              data-height="500"
+                              href="https://twitter.com/elonmusk?ref_src=twsrc%5Etfw">
+                              <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                           </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Instagramの埋め込みを行う場合（現状は<noscript>にしている） -->
+                    <noscript>
+                    <div class="social-feed">
+                        <h2>Instagramでの活動</h2>
+                        <div class="feed-placeholder">
+                            <i>📷</i>
+                            <p>Instagramの埋め込みフィードがここに表示されます</p>
+                            <p>※実際の実装時にはInstagramのウィジェットコードを追加してください</p>
+                        </div>
+                    </div>
+                    </noscript>
+                    <!-- Instagramの埋め込みを行う場合（現状は<noscript>にしている） -->
+                </div>
+            </section>
+
+            <section>
+                <h2 class="section-title">主なプロジェクト</h2>
+                <div class="projects">
+                    <div class="project-card">
+                        <img src="/api/placeholder/400/200" alt="食育プロジェクト" class="project-image">
+                        <div class="project-content">
+                            <h3>地域食育プロジェクト</h3>
+                            <p>地域の小中学校と連携し、子どもたちに食の大切さを伝える活動を行っています。栄養学科の学生が中心となり、楽しく学べる食育教室を定期的に開催しています。</p>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <img src="/api/placeholder/400/200" alt="高齢者向け栄養サポート" class="project-image">
+                        <div class="project-content">
+                            <h3>高齢者向け栄養サポート</h3>
+                            <p>地域の高齢者施設と連携し、高齢者の健康維持に役立つ栄養アドバイスや調理実習を行っています。食物学科の学生と教員が中心となって活動しています。</p>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <img src="/api/placeholder/400/200" alt="地域食材活用プロジェクト" class="project-image">
+                        <div class="project-content">
+                            <h3>地域食材活用プロジェクト</h3>
+                            <p>地元の農家や食品事業者と協力し、地域の特産品や伝統食材を活用した新しいレシピや商品開発に取り組んでいます。産学連携による地域活性化を目指しています。</p>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <img src="/api/placeholder/400/200" alt="災害時食支援プロジェクト" class="project-image">
+                        <div class="project-content">
+                            <h3>災害時食支援プロジェクト</h3>
+                            <p>災害時に役立つ知識や技術を地域住民に伝える活動を行っています。非常食の活用法や、限られた状況での調理方法などのワークショップを定期的に開催しています。</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>東京聖栄大学</h3>
+                    <p>〒124-8530</p>
+                    <p>東京都葛飾区西新小岩1-4-6</p>
+                    <p>TEL: 03-3692-0211</p>
+                    <p>FAX: 03-3692-0213</p>
+                </div>
+                <div class="footer-section">
+                    <h3>リンク</h3>
+                    <ul>
+                        <li><a href="#">大学紹介</a></li>
+                        <li><a href="#">学部・学科</a></li>
+                        <li><a href="#">研究・社会貢献</a></li>
+                        <li><a href="#">入試情報</a></li>
+                        <li><a href="#">キャンパスライフ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>アクセス</h3>
+                    <p>JR総武線「新小岩駅」北口より徒歩約1分</p>
+                </div>
+                <div class="footer-section">
+                    <h3>SNS</h3>
+                    <ul>
+                        <li><a href="#">X（旧Twitter）</a></li>
+                        <li><a href="#">Instagram</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 東京聖栄大学 All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <a href="#" class="back-to-top" id="backToTop">↑</a>
+
+    <script>
+        // ナビゲーションの表示/非表示を切り替える
+        const navToggle = document.getElementById('navToggle');
+        const mainNav = document.getElementById('mainNav');
+        
+        navToggle.addEventListener('click', () => {
+            mainNav.classList.toggle('show');
+        });
+        
+        // トップに戻るボタンの表示/非表示を制御
+        const backToTop = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTop.classList.add('show');
+            } else {
+                backToTop.classList.remove('show');
+            }
+        });
+        
+        backToTop.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    </script>
+</body>
+</html>
